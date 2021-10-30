@@ -5,6 +5,7 @@ import Location from "./components/Location";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [position, setPosition] = useState({
         lat: "",
         long: "",
@@ -17,8 +18,7 @@ function App() {
            const response = await fetch(city_url)
            const json = await response.json()
            setDescription(json)
-           console.log(description)
-           console.log(position)
+           setLoading(!loading)
        } catch (error){
            console.log("error",error)
        }
@@ -36,21 +36,18 @@ function App() {
                 )
             })
         fetchData();
-
-
-
-
     }, []);
 
     const darkModeHandler = () => {
         setDarkMode(!darkMode)
         console.log(darkMode)
     }
+    if(loading) return <h1>Loading</h1>
     return (
     <div className={`app ${darkMode && "dark"}`}>
       {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
       <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
-        <Location position={position}/>
+        <Location position={position} description={description}/>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-const Location = ({position}) => {
+const Location = ({position,description}) => {
     return (
         <div className="max-w-7xl m-auto">
             <div className="dark-mode p-4 mt-8 inline-block">
@@ -14,6 +14,12 @@ const Location = ({position}) => {
                 <div className="">
                     longitude:{position.long}
                 </div>
+                <p>{description.countryName}</p>
+                <img
+                    src={`https://flagcdn.com/64x48/${description.countryCode.toLowerCase()}.png`}
+                    width="64"
+                    height="48"
+                    alt="South Africa"/>
 
             </div>
         </div>
