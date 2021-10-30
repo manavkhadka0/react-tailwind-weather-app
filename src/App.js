@@ -1,11 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
 import Header from "./components/Header";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Location from "./components/Location";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
+    const [position, setPosition] = useState({
+        lat: "",
+        long: ""
+    });
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            function (position){
+                setPosition(
+                    {
+                        lat: position.coords.latitude,
+                        long: position.coords.longitude
+                    }
+                )
+            })
+    }, []);
 
     const darkModeHandler = () => {
         setDarkMode(!darkMode)
@@ -15,7 +30,7 @@ function App() {
     <div className={`app ${darkMode && "dark"}`}>
       {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
       <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
-        <Location/>
+        <Location position={position}/>
     </div>
   );
 }
