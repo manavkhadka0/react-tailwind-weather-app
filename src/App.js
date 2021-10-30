@@ -5,10 +5,15 @@ import {useState} from "react";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
+
+    const darkModeHandler = () => {
+        setDarkMode(!darkMode)
+        console.log(darkMode)
+    }
     return (
-    <div className="app">
+    <div className={`app ${darkMode && "dark"}`}>
       {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
-      <Header/>
+      <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
     </div>
   );
 }
