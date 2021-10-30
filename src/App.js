@@ -6,22 +6,36 @@ import Location from "./components/Location";
 function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [description, setDescription] = useState({});
+    const [weather, setWeather] = useState({});
     const [position, setPosition] = useState({
         lat: "",
         long: "",
     });
-    const [description, setDescription] = useState({});
+    const API_KEY = "7eb6f2b49c8b1ff69de5b2c9f4463a35"
     const city_url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.lat}&longitude=${position.long}&localityLanguage=en`
 
-    const fetchData = async () => {
+    const weather_url = `api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lon}&appid=${API_KEY}`
+
+    const fetchCityData = async () => {
        try{
-           const response = await fetch(city_url)
-           const json = await response.json()
-           setDescription(json)
-           setLoading(!loading)
+           const cityResponse = await fetch(city_url)
+           const cityData = await cityResponse.json()
+           setDescription(cityData)
        } catch (error){
            console.log("error",error)
        }
+
+    }
+    const fetchWeatherData = async () => {
+        try{
+            const weatherResponse = await fetch(city_url)
+            const weatherData = await weatherResponse.json()
+            setDescription(weatherData)
+            setLoading(!loading)
+        } catch (error){
+            console.log("error",error)
+        }
 
     }
 
@@ -35,7 +49,8 @@ function App() {
                     }
                 )
             })
-        fetchData();
+        fetchCityData();
+        fetchWeatherData();
     }, []);
 
     const darkModeHandler = () => {
@@ -48,6 +63,7 @@ function App() {
       {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
       <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
         <Location position={position} description={description}/>
+        {weather}
     </div>
   );
 }

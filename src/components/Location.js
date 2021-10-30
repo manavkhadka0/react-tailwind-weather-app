@@ -2,27 +2,30 @@ import React, {useEffect} from 'react';
 
 const Location = ({position,description}) => {
     return (
-        <div className="max-w-7xl m-auto">
-            <div className="dark-mode p-4 mt-8 inline-block">
+        <div className="max-w-7xl m-auto flex justify-center items-center">
+            <div className="w-96 rounded-lg dark-mode  mt-8 inline-block">
                 {/* Title */}
-                <div className="">
-                    <h1 className="text-2xl bold">Your Details</h1>
+                <div className="text-center">
+                    <h1 className="p-4 text-2xl bold border-b-2 dark:border-gray-200 border-gray-700">Your Details</h1>
                 </div>
-                <div className="">
-                    Latitude:{position.lat}
+                <div className="flex p-4 items-center">
+                    <div className="">
+                        <p>{description.countryName}<sup>{description.countryCode}</sup></p>
+                        <p>{description.city}</p>
+                    </div>
+                    <div className="">
+                        <img
+                            src={`https://flagcdn.com/64x48/${description.countryCode.toLowerCase()}.png`}
+                            width="64"
+                            height="48"
+                            className="inline-block"
+                            alt={`${description.countryName}`}/>
+                    </div>
                 </div>
-                <div className="">
-                    longitude:{position.long}
-                </div>
-                <p>{description.countryName}<sup>{description.countryCode}</sup></p>
-                <p>{description.city}</p>
 
-                <img
-                    src={`https://flagcdn.com/64x48/${description.countryCode.toLowerCase()}.png`}
-                    width="64"
-                    height="48"
-                    className="inline-block"
-                    alt={`${description.countryName}`}/>
+
+
+
 
 
 
