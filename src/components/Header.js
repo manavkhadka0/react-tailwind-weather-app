@@ -3,9 +3,9 @@ import React from 'react';
 const Header = ({darkMode, darkModeHandler}) => {
     return (
         /* Header */
-        <div className="bg-gray-200 bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 transition duration-500 shadow-xl">
+        <div className="px-8 xl:px-0 dark-mode shadow-xl">
             {/* ITEMS */}
-            <div className="p-8   flex items-center max-w-7xl justify-between m-auto">
+            <div className="py-8 flex items-center max-w-7xl justify-between m-auto">
                 {/* TITLE */}
                 <div className="title">
                     <h1 className="text-lg md:text-3xl  font-bold">Weather App</h1>
