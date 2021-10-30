@@ -14,12 +14,17 @@ const Location = ({position,description}) => {
                 <div className="">
                     longitude:{position.long}
                 </div>
-                <p>{description.countryName}</p>
+                <p>{description.countryName}<sup>{description.countryCode}</sup></p>
+                <p>{description.city}</p>
+
                 <img
                     src={`https://flagcdn.com/64x48/${description.countryCode.toLowerCase()}.png`}
                     width="64"
                     height="48"
-                    alt="South Africa"/>
+                    className="inline-block"
+                    alt={`${description.countryName}`}/>
+
+
 
             </div>
         </div>
