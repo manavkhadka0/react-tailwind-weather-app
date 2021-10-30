@@ -7,8 +7,23 @@ function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [position, setPosition] = useState({
         lat: "",
-        long: ""
+        long: "",
     });
+    const [description, setDescription] = useState({});
+    const city_url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.lat}&longitude=${position.long}&localityLanguage=en`
+
+    const fetchData = async () => {
+       try{
+           const response = await fetch(city_url)
+           const json = await response.json()
+           setDescription(json)
+           console.log(description)
+           console.log(position)
+       } catch (error){
+           console.log("error",error)
+       }
+
+    }
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -20,6 +35,11 @@ function App() {
                     }
                 )
             })
+        fetchData();
+
+
+
+
     }, []);
 
     const darkModeHandler = () => {
