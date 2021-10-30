@@ -2,9 +2,9 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <div className="p-8 bg-gray-200 flex items-center justify-center space-x-60">
+        <div className="p-8 shadow-xl bg-gray-200 text-gray-700 flex items-center justify-between max-w-7xl m-auto">
             <div className="title">
-                <h1 className="text-3xl font-bold text-gray-700">Weather App</h1>
+                <h1 className="text-3xl font-bold">Weather App</h1>
             </div>
             <div className="button flex flex-col">
                 <div
@@ -14,7 +14,7 @@ const Header = () => {
                     <label htmlFor="toggle"
                            className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"/>
                 </div>
-                <label htmlFor="toggle" className="text-xs text-gray-700">Toggle me.</label>
+                <label htmlFor="toggle" className="text-xs">Dark Mode</label>
             </div>
 
         </div>
