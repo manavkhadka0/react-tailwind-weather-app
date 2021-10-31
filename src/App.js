@@ -1,63 +1,51 @@
 import './App.css';
 import Header from "./components/Header";
 import {useEffect, useState} from "react";
+import axios from "axios";
 import Location from "./components/Location";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [description, setDescription] = useState({});
     const [weather, setWeather] = useState({});
-    const [position, setPosition] = useState({
-        lat: "",
-        long: "",
-    });
     const API_KEY = "7eb6f2b49c8b1ff69de5b2c9f4463a35"
-    const city_url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.lat}&longitude=${position.long}&localityLanguage=en`
-
-    const weather_url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.long}&appid=${API_KEY}`
-
-    const fetchData = async () => {
-       try{
-           const cityResponse = await fetch(city_url)
-           const cityData = await cityResponse.json()
-           setDescription(cityData)
-           const weatherResponse = await fetch(weather_url)
-           const weatherData = await weatherResponse.json()
-           setWeather(weatherData)
-           setLoading(!loading)
-       } catch (error){
-           console.log("error",error)
-       }
-
-    }
-
+    
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(
-            function (position){
-                setPosition(
-                    {
-                        lat: position.coords.latitude,
-                        long: position.coords.longitude
-                    }
-                )
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                let {latitude, longitude} = position.coords;
+                const weather_url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`
+                axios.get(weather_url)
+                    .then(res => {
+                        setWeather(res.data)
+                        setLoading(false)
+                    })
             })
-        fetchData();
+            
+        } else {
+            alert("Sorry, your browser does not support geolocation services.")
+        }
+        
     }, []);
-
+    
     const darkModeHandler = () => {
         setDarkMode(!darkMode)
         console.log(darkMode)
     }
-    if(loading) return <h1>Loading</h1>
+    if (loading) {
+        return <h1>Loading</h1>
+    }
     return (
-    <div className={`app ${darkMode && "dark"}`}>
-      {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
-      <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
-        <Location position={position} description={description}/>
-        {console.log(weather)}
-    </div>
-  );
+        <div className={`app ${darkMode && "dark"}`}
+             style={ !darkMode ? {
+            backgroundColor: `#D1D9E1`} : { backgroundColor:`#1E262E`}
+        }>
+            {/* Header (Title , Toggle Switch => Dark / Light Mode)*/}
+                <Header darkMode={darkMode} darkModeHandler={darkModeHandler}/>
+                <Location  />
+            {console.log(weather)}
+        </div>
+    );
 }
 
 export default App;
